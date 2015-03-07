@@ -19,10 +19,10 @@ Whether or not to show the GUI of the application
 ~timeout (float, default:1.0) <br/>
 Time to wait for an input image
 
-~image_input (string, default: image_input) <br/>
+~image_input (string, default: ~image_input) <br/>
 Topic on which to listen for images
 
-~image_output<br/>
+~image_output<br/> (string, default: ~image_filtered)
 Topic on which to send the filtered images
 
 # Seagoat doc
