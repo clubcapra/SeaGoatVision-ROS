@@ -1,3 +1,29 @@
+# ROS doc
+
+### Subscribed topics
+#### image_input ([sensor_msgs/Image](http://docs.ros.org/api/sensor_msgs/html/msg/Image.html))
+Incoming raw image to apply filters on. Can be modified with the image_input parameter.
+
+### Published topics
+#### image_filtered ([sensor_msgs/Image](http://docs.ros.org/api/sensor_msgs/html/msg/Image.html))
+Output image after the filters have been applied. Can be modified with the ~image_output parameter.
+
+### Services
+~show_gui (std_srvs/Empty)<br/>
+Shows the Seagoat GUI.
+
+### Parameters
+~gui (bool, default: False)<br/>
+Whether or not to show the GUI of the application
+
+~image_input (string, default: image_input) <br/>
+Topic on which to listen for images
+
+~image_output<br/>
+Topic on which to send the filtered images
+
+# Seagoat doc
+
 This Vision Serveur is tested on OpenCV 2.4.2 and Python 2.7 on Fedora 17 and Ubuntu 12.04.
 
 Requirements:
