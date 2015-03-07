@@ -16,7 +16,7 @@ Shows the Seagoat GUI.
 ~gui (bool, default: False)<br/>
 Whether or not to show the GUI of the application
 
-~timeout (float, default:1.0)
+~timeout (float, default:1.0) <br/>
 Time to wait for an input image
 
 ~image_input (string, default: image_input) <br/>
