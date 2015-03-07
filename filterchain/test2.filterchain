@@ -1,0 +1,25 @@
+[BGR2RGB]
+
+[Perspective]
+bottomleftx = 202.0
+bottomlefty = 734.0
+bottomrightx = 1090.0
+bottomrighty = 734.0
+topleftx = 0.0
+toplefty = 0
+toprightx = 1292.0
+toprighty = 0
+
+[SectionFilterCPP]
+grass_max = 80
+grass_min = 16
+kernel_dilate_height = 3
+kernel_dilate_width = 3
+kernel_erode_height = 3
+kernel_erode_width = 3
+light_min = 227
+min_area = 1027
+sections = 5
+
+[RosImagePublisher]
+
