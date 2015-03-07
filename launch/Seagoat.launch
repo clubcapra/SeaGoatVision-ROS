@@ -1,0 +1,7 @@
+<launch>
+    <node pkg="seagoatvision_ros" type="seagoat_node.py" name="seagoat_node" >
+        <param name="timeout" value="1.0" />
+        <param name="gui" value="False" />
+    </node>
+
+</launch>

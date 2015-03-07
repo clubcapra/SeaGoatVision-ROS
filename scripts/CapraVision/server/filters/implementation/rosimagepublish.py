@@ -27,8 +27,10 @@ class RosImagePublisher:
     """Publish the image for ROS"""
 
     def __init__(self):
-        self.publisher = rospy.Publisher('~output', sensor_msgs.msg.Image, queue_size=10)
+        self.topic = rospy.get_param('~image_output', "~image_filtered")
+        self.publisher = rospy.Publisher(self.topic, sensor_msgs.msg.Image, queue_size=10)
         self.bridge = cv_bridge.CvBridge()
+        rospy.loginfo("Seagoat starting RosImagePublisher on " + self.topic)
 
     def execute(self, image):
         msg = self.bridge.cv2_to_imgmsg(image, encoding="passthrough")

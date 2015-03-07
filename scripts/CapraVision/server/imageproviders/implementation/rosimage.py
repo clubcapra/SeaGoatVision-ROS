@@ -33,9 +33,11 @@ class RosImage:
     """Return images from  a ros topic."""
 
     def __init__(self):
-        topic = rospy.get_param('~rosimage_topic', "/image_raw")
-        rospy.Subscriber(topic, Image, handle_image)
-        self.timeout = rospy.get_param('~timeout', 1)
+        self.topic = rospy.get_param('~image_input', "/image_raw")
+        self.timeout = rospy.get_param('~timeout', 1.0)
+        rospy.Subscriber(self.topic, Image, handle_image)
+
+        rospy.loginfo("Seagoat RosImage source subscribed to " + self.topic)
 
     def __iter__(self):
         return self
@@ -44,7 +46,7 @@ class RosImage:
         start = rospy.get_time()
         while 'image' not in globals():
             if rospy.get_time() - start > self.timeout:
-                rospy.logerr("Timed out waiting for image")
+                rospy.logerr("Timed out waiting for image on topic " + self.topic)
                 return None
             rospy.sleep(0.01)
 

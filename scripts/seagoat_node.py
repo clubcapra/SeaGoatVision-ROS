@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 
+
 import rospy
 import os
 from threading import Thread
@@ -12,8 +13,7 @@ from CapraVision.client.gtk.main import WinFilterChain
 from gi.repository import Gtk, GObject
 from seagoatvision_ros.srv import *
 
-def handle_image(req):
-    print "got image"
+# This node is the integration of Seagoat in ROS. See README for documentation
 
 def send(cmd):
 
