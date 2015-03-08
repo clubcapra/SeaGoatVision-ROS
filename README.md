@@ -13,6 +13,9 @@ Output image after the filters have been applied. Can be modified with the ~imag
 Shows the Seagoat GUI.
 
 ### Parameters
+~filterchain (string, required)<br/>
+Path of the filterchain to load
+
 ~gui (bool, default: False)<br/>
 Whether or not to show the GUI of the application
 
