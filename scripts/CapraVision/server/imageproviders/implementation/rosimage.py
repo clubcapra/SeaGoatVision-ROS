@@ -34,6 +34,7 @@ class RosImage:
 
     def __init__(self):
         self.topic = rospy.get_param('~image_input', "/image_raw")
+        print self.topic
         self.timeout = rospy.get_param('~timeout', 1.0)
         rospy.Subscriber(self.topic, Image, handle_image)
 
@@ -46,7 +47,7 @@ class RosImage:
         start = rospy.get_time()
         while 'image' not in globals():
             if rospy.get_time() - start > self.timeout:
-                rospy.logerr("Timed out waiting for image on topic " + self.topic)
+                rospy.logwarn("Timed out waiting for image on topic " + self.topic)
                 return None
             rospy.sleep(0.01)
 

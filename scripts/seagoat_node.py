@@ -1,10 +1,8 @@
 #! /usr/bin/env python
 
 
-import rospy
-import os
+import os.path
 from threading import Thread
-from time import sleep
 
 import rospy
 
@@ -44,8 +42,12 @@ class SeaGoatNode:
         rospy.init_node('seagoat_node')
 
         visible = rospy.get_param('~gui', False)
+        filterchain = rospy.get_param('~filterchain')
 
-        s_show_gui = rospy.Service('~show_gui', ShowGui, handle_show_gui)
+        if not os.path.exists(filterchain):
+            rospy.logerr("Filterchain not found: '" + filterchain + "'")
+
+        rospy.Service('~show_gui', ShowGui, handle_show_gui)
 
         # Directly connected to the vision server
         c = VisionManager()
@@ -57,7 +59,7 @@ class SeaGoatNode:
         GObject.threads_init()
 
         self.w = WinFilterChain(c)
-        self.w.load_chain("/home/yohan/Ibex/src/seagoatvision_ros/filterchain/test2.filterchain")
+        self.w.load_chain(filterchain)
         #self.w.load_image_source("/home/yohan/Pictures/earth.jpg")
         self.w.load_rosimage_source()
 
@@ -70,7 +72,7 @@ class SeaGoatNode:
         rospy.spin()
 
         # Close connection.
-        rospy.loginfo( "Closing down seagoat")
+        rospy.loginfo("Closing down seagoat")
         self.w.schedule_quit()
         c.close_server()
         exit()
