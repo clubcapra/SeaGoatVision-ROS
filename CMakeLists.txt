@@ -9,6 +9,10 @@ find_package(catkin REQUIRED COMPONENTS
     rospy
     std_msgs
     message_generation
+    sensor_msgs
+    cv_bridge
+    roscpp
+    image_transport
 )
 
 ## System dependencies are found with CMake's conventions
@@ -157,3 +161,8 @@ catkin_package(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+include_directories(include ${catkin_INCLUDE_DIRS})
+
+add_executable(image_rotate_node src/image_rotate_node.cpp)
+target_link_libraries(image_rotate_node ${catkin_LIBRARIES})
