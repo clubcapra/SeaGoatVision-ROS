@@ -6,6 +6,7 @@
 #include <image_transport/image_transport.h>
 #include <cv_bridge/cv_bridge.h>
 #include <sensor_msgs/image_encodings.h>
+#include <tf/transform_listener.h>
 
 #include <sstream>
 #include <stdio.h>
@@ -16,26 +17,53 @@ class ImageRotate
 {
 
     ros::NodeHandle nh_;
-  image_transport::ImageTransport it_;
-  image_transport::Subscriber image_sub_;
-  image_transport::Publisher image_pub_;
+    image_transport::ImageTransport it_;
+    image_transport::Subscriber image_sub_;
+    image_transport::Publisher image_pub_;
 
-    public:
+    tf::TransformListener listener;
+
+    float cameraHeight;
+    float cameraAngle;
+
+public:
     ImageRotate()
         : it_(nh_)
     {
-        ROS_INFO("Allo");
-      image_pub_ = it_.advertise("image_rotated", 10);
-      image_sub_ = it_.subscribe("/image_raw", 10, &ImageRotate::handleImage, this);
+        image_pub_ = it_.advertise("image_rotated", 10);
+        image_sub_ = it_.subscribe("/image_raw", 10, &ImageRotate::handleImage, this);
 
+
+        tf::StampedTransform transform;
+        try{
+            listener.lookupTransform("/base_footprint", "/camera", ros::Time(0), transform);
+
+            cameraHeight = transform.getOrigin().getZ();
+
+            double roll, pitch, yaw;
+            tf::Quaternion cameraRotationQ = transform.getRotation();
+            tf::Matrix3x3(cameraRotationQ).getRPY(roll, pitch, yaw);
+            cameraAngle = pitch;
+
+            ROS_INFO("Using camera TF with cameraHeight %f and cameraAngle %f", cameraHeight, cameraAngle);
+        }
+        catch (tf::TransformException ex){
+            ROS_ERROR("%s",ex.what());
+            ros::Duration(1.0).sleep();
+        }
 
     }
 
     cv::Mat transform(cv::Mat image)
     {
 
-        int rotationX_ = -28.6;
+        int rotationX_ = -cameraAngle;
         int rotationY_ = 0;
+
+        double dx = 0;
+        double dy = 0;//cameraHeight * 1000;
+        double dz = 0.8;
+
         int zoom_ = 100;
 
         //Load parameters from file
@@ -53,7 +81,7 @@ class ImageRotate
             0, 0,    1);
 
         // Rotation matrices around the X axis
-        const double alpha = rotationX_ / 180. * 3.1416 / w;
+        const double alpha = -0.5 / w;
         Mat RX = (Mat_<double>(4, 4) <<
             1,          0,           0, 0,
             0, cos(alpha), -sin(alpha), 0,
@@ -72,9 +100,9 @@ class ImageRotate
         // Translation matrix on the Z axis
         const double dist = 0.5;//zoom_ / 100;
         Mat T = (Mat_<double>(4, 4) <<
-            1, 0, 0, 0,
-            0, 1, 0, 0,
-            0, 0, 1, dist,
+            1, 0, 0, dx,
+            0, 1, 0, dy,
+            0, 0, 1, dz,
             0, 0, 0, 1);
 
         const double f = 1;
@@ -101,7 +129,7 @@ class ImageRotate
         cv_bridge::CvImagePtr cv_ptr;
         try
         {
-          cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
+          cv_ptr = cv_bridge::toCvCopy(msg, "");
         }
         catch (cv_bridge::Exception& e)
         {

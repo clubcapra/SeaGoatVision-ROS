@@ -13,6 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
     cv_bridge
     roscpp
     image_transport
+    tf
 )
 
 ## System dependencies are found with CMake's conventions
@@ -110,9 +111,9 @@ catkin_package(
 # add_dependencies(capra_controlpanel_node capra_controlpanel_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(capra_controlpanel_node
-#   ${catkin_LIBRARIES}
-# )
+#target_link_libraries(image_rotate_node
+#  ${catkin_LIBRARIES}
+#)
 
 #############
 ## Install ##

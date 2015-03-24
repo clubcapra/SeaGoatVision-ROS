@@ -13,5 +13,8 @@
         <param name="in" value="/seagoat_node/image_filtered" />
         <param name="out" value="/seagoat_node/" />
     </node>
+    <node pkg="seagoatvision_ros" type="image_rotate_node" name="image_rotate_node" >
+           <remap from="/image_raw" to="/seagoat_node/image_filtered" />
+    </node>
     <node pkg="seagoatvision_ros" type="image_to_pointclound.py" name="image_to_pointclound" />
 </launch>
