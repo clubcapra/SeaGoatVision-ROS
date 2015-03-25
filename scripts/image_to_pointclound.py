@@ -60,6 +60,7 @@ def handle_image(req):
     img = cv2.resize(img,(w,h))
 
     points = np.column_stack((points_xyz, np.flipud(np.ravel(img))))
+    points = points[np.logical_not(points[:,3] == 0)]
 
     header = req.header
     header.frame_id = "img"
