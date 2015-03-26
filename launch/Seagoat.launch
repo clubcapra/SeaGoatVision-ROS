@@ -9,6 +9,7 @@
         <param name="image_output" value="~image_filtered" />
         <param name="filterchain" value="$(arg filterchain)" />
     </node>
+
     <node pkg="seagoatvision_ros" type="republish_node.py" name="republish_node" >
         <param name="in" value="/seagoat_node/image_filtered" />
         <param name="out" value="/seagoat_node/" />

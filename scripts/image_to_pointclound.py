@@ -17,10 +17,11 @@ bridge = CvBridge()
 # h = 734
 w = 120
 h = 73
-k = 100.0
+ky = 25.0
+kx = 10.0
 
-x = np.ravel(np.array([[j/k for i in xrange(0, w)] for j in xrange(-h/2,h/2)], dtype=np.float))
-y = np.ravel(np.array([[i/k for i in xrange(-w/2, w/2)] for i in xrange(0,h)], dtype=np.float))
+x = np.ravel(np.array([[j/kx for i in xrange(0, w)] for j in xrange(-h/2,h/2)], dtype=np.float))
+y = np.ravel(np.array([[i/ky for i in xrange(-w/2, w/2)] for i in xrange(0,h)], dtype=np.float))
 z = np.ravel(np.array([[0 for i in xrange(0, w)] for i in xrange(0,h)], dtype=np.float))
 points_xyz = np.column_stack((x,y,z))
 
@@ -65,9 +66,9 @@ def handle_image(req):
     header = req.header
     header.frame_id = "img"
 
+    global cloud_out
     cloud_out = pc2.create_cloud(header, fields, points)
-    global pub
-    pub.publish(cloud_out)
+
 
 class ImageToPointcloud:
 
@@ -79,14 +80,15 @@ class ImageToPointcloud:
         topic_out = rospy.get_param('~out', "/cloud_in")
 
         rospy.Subscriber(topic_in, Image, handle_image)
-        global pub
         pub = rospy.Publisher(topic_out, PointCloud2, queue_size=2)
 
         #publish transform to image
         listener = tf.TransformListener()
 
-        rate = rospy.Rate(10)
+        rate = rospy.Rate(50)
         while not rospy.is_shutdown():
+
+            tf_found = False
 
             try:
                 (camTrans,camRotQ) = listener.lookupTransform('/base_footprint', '/camera', rospy.Time(0))
@@ -94,14 +96,19 @@ class ImageToPointcloud:
 
                 imgRotE = (-camRotE[0], -camRotE[1], -camRotE[2])
                 imgRotQ = tf.transformations.quaternion_from_euler(*imgRotE)
-                print imgRotE
+                #print imgRotE
 
                 br = tf.TransformBroadcaster()
                 # dist en X = (hauteur camera) / cos(angle entre camera et axe vertical)
                 br.sendTransform((-camTrans[2] / cos(imgRotE[1]- pi/2),0.0,0.0),imgRotQ,rospy.Time.now(), "img", "camera")
+                if "cloud_out" in globals():
+                    global cloud_out
+                    pub.publish(cloud_out)
 
             except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
-                rospy.logwarn("Error looking up tf")
+                # output error only if the tf was previously found and is now lost.
+                if tf_found:
+                    rospy.logerr("Error looking up tf")
 
             rate.sleep()
 

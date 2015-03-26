@@ -10,6 +10,7 @@
 
 #include <sstream>
 #include <stdio.h>
+#include <math.h>
 
 using namespace cv;
 
@@ -36,6 +37,7 @@ public:
 
         tf::StampedTransform transform;
         try{
+            listener.waitForTransform("/base_footprint", "/camera", ros::Time(), ros::Duration(2.0));
             listener.lookupTransform("/base_footprint", "/camera", ros::Time(0), transform);
 
             cameraHeight = transform.getOrigin().getZ();
@@ -43,7 +45,7 @@ public:
             double roll, pitch, yaw;
             tf::Quaternion cameraRotationQ = transform.getRotation();
             tf::Matrix3x3(cameraRotationQ).getRPY(roll, pitch, yaw);
-            cameraAngle = pitch;
+            cameraAngle = M_PI/2.0f - pitch;
 
             ROS_INFO("Using camera TF with cameraHeight %f and cameraAngle %f", cameraHeight, cameraAngle);
         }
@@ -98,7 +100,6 @@ public:
             0,          0,           0, 1);
 
         // Translation matrix on the Z axis
-        const double dist = 0.5;//zoom_ / 100;
         Mat T = (Mat_<double>(4, 4) <<
             1, 0, 0, dx,
             0, 1, 0, dy,

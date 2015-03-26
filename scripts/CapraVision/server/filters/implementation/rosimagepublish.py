@@ -34,7 +34,7 @@ class RosImagePublisher:
 
     def execute(self, image):
         msg = self.bridge.cv2_to_imgmsg(image, encoding="passthrough")
-        msg.header.frame_id = 'seagoat'
+        msg.header.frame_id = 'img'
 
         try:
             self.publisher.publish(msg)
