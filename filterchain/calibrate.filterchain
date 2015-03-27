@@ -1,0 +1,30 @@
+[BGR2RGB]
+
+[BGR2HSV]
+
+[Perspective]
+bottomleftx = 500.0
+bottomlefty = 560.0
+bottomrightx = 800.0
+bottomrighty = 560.0
+topleftx = 0.0
+toplefty = 0.0
+toprightx = 1292.0
+toprighty = 0.0
+
+[PerspectiveByAngle]
+rotationx_ = 0.0
+rotationy_ = 0.0
+zoom_ = 73.0
+
+[ColorThreshold]
+c1max = 255.0
+c1min = 0.0
+c2max = 255.0
+c2min = 35.6
+c3max = 255.0
+c3min = 0.0
+shift_hue_plane = False
+
+[RosImagePublisher]
+

@@ -13,15 +13,13 @@ from math import *
 
 bridge = CvBridge()
 
-# w = 1292
-# h = 734
-w = 120
-h = 73
-ky = 25.0
-kx = 10.0
+# size of the output cloud. total width in meters is (k * w)*100
+k = 20.0 # number of points per meter (float)
+w = 100 # total points for width
+h = 100 # total points for height
 
-x = np.ravel(np.array([[j/kx for i in xrange(0, w)] for j in xrange(-h/2,h/2)], dtype=np.float))
-y = np.ravel(np.array([[i/ky for i in xrange(-w/2, w/2)] for i in xrange(0,h)], dtype=np.float))
+x = np.ravel(np.array([[j/k for i in xrange(0, w)] for j in xrange(-h/2,h/2)], dtype=np.float))
+y = np.ravel(np.array([[i/k for i in xrange(-w/2, w/2)] for i in xrange(0,h)], dtype=np.float))
 z = np.ravel(np.array([[0 for i in xrange(0, w)] for i in xrange(0,h)], dtype=np.float))
 points_xyz = np.column_stack((x,y,z))
 
@@ -76,14 +74,19 @@ class ImageToPointcloud:
 
         rospy.init_node('image_to_pointcloud')
 
-        topic_in = rospy.get_param('~in', "/image_rotated")
-        topic_out = rospy.get_param('~out', "/cloud_in")
+
+        topic_in = rospy.get_param('~in', "/image_in")
+        topic_out = rospy.get_param('~out', "/cloud")
 
         rospy.Subscriber(topic_in, Image, handle_image)
         pub = rospy.Publisher(topic_out, PointCloud2, queue_size=2)
 
         #publish transform to image
         listener = tf.TransformListener()
+
+        real_w = (k * w) /100.0
+        real_h = (k * h) /100.0
+        rospy.loginfo("Publishing cloud, size: " + str(real_w) + " x " + str(real_h))
 
         rate = rospy.Rate(50)
         while not rospy.is_shutdown():

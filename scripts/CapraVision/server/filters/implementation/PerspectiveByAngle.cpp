@@ -55,7 +55,7 @@ cv::Mat execute(cv::Mat image)
 		0,          0,           0, 1);
 
 	// Translation matrix on the Z axis
-	const double dist = zoom_ / 100;
+	const double dist = zoom_ / 100.0;
 	Mat T = (Mat_<double>(4, 4) <<
 		1, 0, 0, 0,
 		0, 1, 0, 0,
