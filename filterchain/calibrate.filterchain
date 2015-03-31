@@ -2,20 +2,18 @@
 
 [BGR2HSV]
 
-[Perspective]
-bottomleftx = 500.0
-bottomlefty = 560.0
-bottomrightx = 800.0
-bottomrighty = 560.0
-topleftx = 0.0
-toplefty = 0.0
-toprightx = 1292.0
-toprighty = 0.0
-
-[PerspectiveByAngle]
-rotationx_ = 0.0
-rotationy_ = 0.0
-zoom_ = 73.0
+[PerspectiveCalibration]
+bottom left x = 202
+bottom left y = 734
+bottom right x = 1090
+bottom right y = 734
+top left ty = 0
+top left x = -200
+top right x = 1292
+top right y = 1292
+translation x = 0
+translation y = 0
+zoom = 100
 
 [ColorThreshold]
 c1max = 255.0
