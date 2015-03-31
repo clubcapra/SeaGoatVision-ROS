@@ -1,9 +1,9 @@
 <launch>
 
-    <arg name="filterchain" default=""/>
+    <arg name="filterchain" default="$(find seagoatvision_ros)/filterchain/default.filterchain"/>
     <arg name="gui" default="True" />
 
-    <node pkg="seagoatvision_ros" type="seagoat_node.py" name="seagoat_node" >
+    <node pkg="seagoatvision_ros" type="seagoat_node.py" name="seagoat_node" output="screen">
         <param name="timeout" value="1.0" />
         <param name="image_input" value="/image_raw" />
         <param name="image_output" value="~image_filtered" />

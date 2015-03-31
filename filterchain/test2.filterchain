@@ -1,5 +1,18 @@
 [BGR2RGB]
 
+[PerspectiveCalibration]
+bottomleftx = 450.0
+bottomlefty = 625.0
+bottomrightx = 850.0
+bottomrighty = 625.0
+topleftx = 0.0
+toplefty = 0.0
+toprightx = 1292.0
+toprighty = 0.0
+translationx = 9.0
+translationy = 121.0
+zoom = 118.0
+
 [SectionFilterCPP]
 grass_max = 80.0
 grass_min = 16.0
