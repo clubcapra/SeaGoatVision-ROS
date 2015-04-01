@@ -10,6 +10,7 @@ from CapraVision.server.core.manager import VisionManager
 from CapraVision.client.gtk.main import WinFilterChain
 from gi.repository import Gtk, GObject
 from seagoatvision_ros.srv import *
+import seagoat_util
 
 # This node is the integration of Seagoat in ROS. See README for documentation
 
@@ -48,6 +49,11 @@ class SeaGoatNode:
             rospy.logerr("Filterchain not found: '" + filterchain + "'")
 
         rospy.Service('~show_gui', ShowGui, handle_show_gui)
+
+        calib_file = rospy.get_param('~calibration_file')
+        if calib_file != "":
+            #copy calibration filter
+            seagoat_util.replace_filter(calib_file, filterchain, "PerspectiveCalibration")
 
         # Directly connected to the vision server
         c = VisionManager()

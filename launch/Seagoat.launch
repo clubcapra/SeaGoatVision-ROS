@@ -2,6 +2,7 @@
 
     <arg name="filterchain" default="$(find seagoatvision_ros)/filterchain/default.filterchain"/>
     <arg name="gui" default="True" />
+    <arg name="calibration_file" default="" />
 
     <node pkg="seagoatvision_ros" type="seagoat_node.py" name="seagoat_node" output="screen">
         <param name="timeout" value="1.0" />
@@ -9,6 +10,7 @@
         <param name="image_output" value="~image_filtered" />
         <param name="gui" value="$(arg gui)" />
         <param name="filterchain" value="$(arg filterchain)" />
+        <param name="calibration_file" value="$(arg calibration_file)" />
     </node>
 
     <node pkg="seagoatvision_ros" type="republish_node.py" name="republish_node" >

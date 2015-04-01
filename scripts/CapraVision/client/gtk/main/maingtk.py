@@ -30,6 +30,9 @@ from CapraVision.server.tcp_server import Server
 from CapraVision.client.controller.controllerProtobuf import ControllerProtobuf
 
 def run():
+
+    # CLASS NOT CURRENTLY USED
+
     # Protobuf
     #c = ControllerProtobuf()
     print "In main/maingtk. Do you really want to be here?"
