@@ -197,9 +197,22 @@ class FilterChain:
             if isinstance(f, DataExtractor):
                 f.remove_output_observer(output)
 
-    def execute(self, image):
+    def execute(self, image_object):
+        stamp = None
+        image = image_object
+
+        if hasattr(image, 'stamp'):
+            stamp = image.stamp
+
+        if hasattr(image, 'image'):
+            image = image.image
+
         for f in self.filters:
+            if stamp is not None:
+                f.stamp = stamp
+
             image = f.execute(image)
+
             for observer in self.image_observers:
                 observer(f, image)
         return image

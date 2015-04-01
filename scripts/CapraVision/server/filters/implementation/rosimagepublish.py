@@ -36,6 +36,9 @@ class RosImagePublisher:
         msg = self.bridge.cv2_to_imgmsg(image, encoding="passthrough")
         msg.header.frame_id = 'img'
 
+        if hasattr(self, 'stamp'):
+            msg.header.stamp = self.stamp
+
         try:
             self.publisher.publish(msg)
         except BaseException as e:

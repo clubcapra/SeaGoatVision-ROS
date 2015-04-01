@@ -26,7 +26,9 @@ bridge = CvBridge()
 
 def handle_image(req):
     global image
-    image = bridge.imgmsg_to_cv2(req, desired_encoding="passthrough")
+
+    raw_image = bridge.imgmsg_to_cv2(req, desired_encoding="passthrough")
+    image = RosImage.TimestampedImage(raw_image, req.header.stamp)
     #print "got image"
 
 class RosImage:
@@ -56,3 +58,11 @@ class RosImage:
 
     def close(self):
         pass
+
+    class TimestampedImage:
+        def __init__(self, img, stamp):
+            self.image = img
+            self.stamp = stamp
+
+        def __getattr__(self, item):
+            return getattr(self.image, item)
