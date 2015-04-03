@@ -30,7 +30,7 @@ if USE_PV_CAM:
         
         def __init__(self):
             self.cam = camera.Camera()
-            #self.cam.initialize()
+            self.cam.initialize()
             self.cam.start()
             self.images = self.cam.getCam()
             

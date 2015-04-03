@@ -13,13 +13,15 @@ from math import *
 
 bridge = CvBridge()
 
-# size of the output cloud. total width in meters is (k * w)*100
-k = 20.0 # number of points per meter (float)
-w = 100 # total points for width
-h = 100 # total points for height
+# size of the output cloud. For example, total width in meters is (w/k)*100
+resolution = 40.0 # number of points per meter (float)
+w = 200 # total points for width
+h = 200 # total points for height
 
-x = np.ravel(np.array([[j/k for i in xrange(0, w)] for j in xrange(-h/2,h/2)], dtype=np.float))
-y = np.ravel(np.array([[i/k for i in xrange(-w/2, w/2)] for i in xrange(0,h)], dtype=np.float))
+topic_in = rospy.get_param('~in', "/image_in")
+
+x = np.ravel(np.array([[j/resolution for i in xrange(0, w)] for j in xrange(-h/2,h/2)], dtype=np.float))
+y = np.ravel(np.array([[i/resolution for i in xrange(-w/2, w/2)] for i in xrange(0,h)], dtype=np.float))
 z = np.ravel(np.array([[0 for i in xrange(0, w)] for i in xrange(0,h)], dtype=np.float))
 points_xyz = np.column_stack((x,y,z))
 
@@ -84,8 +86,8 @@ class ImageToPointcloud:
         #publish transform to image
         listener = tf.TransformListener()
 
-        real_w = (k * w) /100.0
-        real_h = (k * h) /100.0
+        real_w = (resolution * w) /100.0
+        real_h = (resolution * h) /100.0
         rospy.loginfo("Publishing cloud, size: " + str(real_w) + " x " + str(real_h))
 
         rate = rospy.Rate(50)

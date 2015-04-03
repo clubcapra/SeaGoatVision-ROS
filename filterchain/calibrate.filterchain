@@ -2,6 +2,15 @@
 
 [BGR2HSV]
 
+[ColorThreshold]
+c1max = 117.4
+c1min = 75.9
+c2max = 255.0
+c2min = 184.4
+c3max = 255.0
+c3min = 219.7
+shift_hue_plane = False
+
 [PerspectiveCalibration]
 bottomleftx = 450.0
 bottomlefty = 625.0
@@ -14,15 +23,6 @@ toprighty = 0.0
 translationx = 9.0
 translationy = 121.0
 zoom = 118.0
-
-[ColorThreshold]
-c1max = 255.0
-c1min = 0.0
-c2max = 255.0
-c2min = 35.6
-c3max = 255.0
-c3min = 0.0
-shift_hue_plane = False
 
 [RosImagePublisher]
 
