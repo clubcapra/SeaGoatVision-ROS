@@ -162,12 +162,12 @@ class WinFilterChain:
             self.controler.change_source(source)
 
     def load_image_source(self, image):
-        source = self.source_list[self.sourcesListStore[2][0]]
+        source = self.source_list["Image"]
         self.controler.change_source(source)
         self.controler.source.set_image(image)
 
     def load_rosimage_source(self):
-        source = self.source_list[self.sourcesListStore[7][0]]
+        source = self.source_list["RosImage"]
         self.controler.change_source(source)
 
     def load_none_source(self):

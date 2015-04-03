@@ -43,7 +43,7 @@ class SeaGoatNode:
         rospy.init_node('seagoat_node')
 
         visible = rospy.get_param('~gui', False)
-        filterchain = rospy.get_param('~filterchain')
+        filterchain = rospy.get_param('~filterchain', "")
 
         if not os.path.exists(filterchain):
             rospy.logerr("Filterchain not found: '" + filterchain + "'")
