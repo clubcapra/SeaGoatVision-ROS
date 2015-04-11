@@ -42,7 +42,7 @@ class SeaGoatNode:
 
         rospy.init_node('seagoat_node')
 
-        visible = rospy.get_param('~gui', False)
+        visible = rospy.get_param('~gui', True)
         filterchain = rospy.get_param('~filterchain', "")
 
         if not os.path.exists(filterchain):
@@ -59,20 +59,22 @@ class SeaGoatNode:
         c = VisionManager()
 
         if not c.is_connected():
-            print("Vision server is not accessible.")
+            rospy.logerr("Vision server is not accessible.")
             return
 
         GObject.threads_init()
 
-        self.w = WinFilterChain(c)
-        self.w.load_chain(filterchain)
-        #self.w.load_image_source("/home/yohan/Pictures/earth.jpg")
-        self.w.load_rosimage_source()
+        # Load all the gtk stuff before starting the thread
+        self.w = WinFilterChain()
+        self.w.init_window(c)
 
         if visible is True:
             self.show_gui()
 
-        t = Thread(target=Gtk.main)
+        GObject.idle_add(self.w.load_chain, filterchain)
+        GObject.idle_add(self.w.load_rosimage_source)
+
+        t = Thread(target=self.start_gtk)
         t.start()
 
         rospy.spin()
@@ -86,6 +88,11 @@ class SeaGoatNode:
     def show_gui(self):
         rospy.loginfo("Opening seagoat GUI")
         self.w.schedule_show_gui()
+
+    def start_gtk(self):
+        print "Starting gtk"
+        Gtk.main()
+
 
 if __name__ == "__main__":
     try:

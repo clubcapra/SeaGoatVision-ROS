@@ -50,7 +50,10 @@ class WinFilterChain:
     WINDOW_TITLE = "Capra Vision"
     SETTINGS_FILE = "settings.py"
 
-    def __init__(self, controller):
+    def __init__(self):
+        pass
+
+    def init_window(self, controller):
         self.lastSecondFps = 0
         self.fpsCount = 0
         self.image_size = None
@@ -224,6 +227,7 @@ class WinFilterChain:
         return result
     
     def load_chain(self, filename):
+        rospy.loginfo("Loading filterchain " + filename)
         if self.controler.load_chain(filename):
                 self.use_new_chain()
                 self.txtFilterChain.set_text(filename)
