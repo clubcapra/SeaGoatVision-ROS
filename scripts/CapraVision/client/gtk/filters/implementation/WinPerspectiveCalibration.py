@@ -130,7 +130,6 @@ class WinPerspectiveCalibration:
     def on_spnTranslationX_value_changed(self, widget):
         self.filtre.translationX.set_current_value(self.spnTranslationX.get_value())
         self.filtre.configure()
-        print self.filtre.translationX
 
     def on_spnTranslationY_value_changed(self, widget):
         self.filtre.translationY.set_current_value(self.spnTranslationY.get_value())

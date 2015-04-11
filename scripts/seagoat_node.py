@@ -50,7 +50,7 @@ class SeaGoatNode:
 
         rospy.Service('~show_gui', ShowGui, handle_show_gui)
 
-        calib_file = rospy.get_param('~calibration_file')
+        calib_file = rospy.get_param('~calibration_file', "")
         if calib_file != "":
             #copy calibration filter
             seagoat_util.replace_filter(calib_file, filterchain, "PerspectiveCalibration")

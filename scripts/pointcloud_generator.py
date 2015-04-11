@@ -11,7 +11,7 @@ class PointcloudGenerator:
     def __init__(self):
 
         rospy.init_node('pointcloud_generator')
-        pub_cloud = rospy.Publisher("~/cloud", PointCloud2)
+        pub_cloud = rospy.Publisher("~/cloud", PointCloud2, queue_size=10)
 
         r = rospy.Rate(10)
         pcloud = PointCloud2()
