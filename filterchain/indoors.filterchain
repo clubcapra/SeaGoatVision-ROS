@@ -2,27 +2,35 @@
 
 [BGR2HSV]
 
-[ColorThreshold]
-c1max = 153.5
-c1min = 96.2
-c2max = 255.0
-c2min = 204.7
-c3max = 255.0
-c3min = 217.9
-shift_hue_plane = False
+[Rectangle]
+x1 = 520.0
+x2 = 810.0
+y1 = 734.0
+y2 = 590.0
+
+[Undistort]
 
 [PerspectiveCalibration]
 bottomleftx = 478.0
 bottomlefty = 360.0
-bottomrightx = 812.0
+bottomrightx = 829.0
 bottomrighty = 360.0
-topleftx = -72.0
-toplefty = 0.0
-toprightx = 1339.0
-toprighty = 0.0
-translationx = 9.0
-translationy = -360.0
+topleftx = -18.0
+toplefty = 47.0
+toprightx = 1266.0
+toprighty = 73.0
+translationx = 44.0
+translationy = -353.0
 zoom = 197.0
+
+[ColorThreshold]
+c1max = 202.1
+c1min = 28.2
+c2max = 255.0
+c2min = 131.5
+c3max = 255.0
+c3min = 217.9
+shift_hue_plane = False
 
 [RosImagePublisher]
 
