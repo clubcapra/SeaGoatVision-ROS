@@ -3,24 +3,22 @@
 [BGR2HSV]
 
 [Rectangle]
-x1 = 520.0
-x2 = 810.0
-y1 = 734.0
-y2 = 590.0
-
-[Undistort]
+x1 = 520
+x2 = 810
+y1 = 734
+y2 = 590
 
 [PerspectiveCalibration]
-bottomleftx = 499.0
-bottomlefty = 560.0
-bottomrightx = 795.0
-bottomrighty = 560.0
-topleftx = -72.0
+bottomleftx = 452.0
+bottomlefty = 280.0
+bottomrightx = 838.0
+bottomrighty = 280.0
+topleftx = 100.0
 toplefty = 0.0
-toprightx = 1339.0
+toprightx = 1200.0
 toprighty = 0.0
-translationx = 1.0
-translationy = 138.0
+translationx = 4.0
+translationy = -241.0
 zoom = 152.0
 
 [ColorThreshold]
