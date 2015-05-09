@@ -21,7 +21,7 @@ class PointcloudGenerator:
         while not rospy.is_shutdown():
 
             pcloud = pc2.create_cloud_xyz32(pcloud.header, cloud)
-            pcloud.header.frame_id = "odom"
+            pcloud.header.frame_id = "base_footprint"
             pub_cloud.publish(pcloud)
             r.sleep()
 

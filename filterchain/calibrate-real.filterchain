@@ -1,3 +1,5 @@
+[Noop]
+
 [BGR2RGB]
 
 [BGR2HSV]
@@ -11,25 +13,25 @@ y2 = 590.0
 [Undistort]
 
 [PerspectiveCalibration]
-bottomleftx = 478.0
-bottomlefty = 360.0
-bottomrightx = 829.0
-bottomrighty = 360.0
-topleftx = -18.0
-toplefty = 47.0
-toprightx = 1266.0
-toprighty = 73.0
-translationx = 44.0
-translationy = -353.0
-zoom = 197.0
+bottomleftx = 395.0
+bottomlefty = 375.0
+bottomrightx = 860.0
+bottomrighty = 375.0
+topleftx = 19.0
+toplefty = 88.0
+toprightx = 1221.0
+toprighty = 88.0
+translationx = 15.0
+translationy = -149.0
+zoom = 147.0
 
 [ColorThreshold]
-c1max = 127.1
-c1min = 81.2
+c1max = 123.7
+c1min = 15.2
 c2max = 255.0
-c2min = 192.4
+c2min = 0.0
 c3max = 255.0
-c3min = 202.9
+c3min = 237.2
 shift_hue_plane = False
 
 [RosImagePublisher]
