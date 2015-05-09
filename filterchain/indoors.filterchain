@@ -6,31 +6,33 @@
 x1 = 520.0
 x2 = 810.0
 y1 = 734.0
-y2 = 590.0
+y2 = 538.0
 
 [Undistort]
 
-[PerspectiveCalibration]
-bottomleftx = 478.0
-bottomlefty = 360.0
-bottomrightx = 829.0
-bottomrighty = 360.0
-topleftx = -18.0
-toplefty = 47.0
-toprightx = 1266.0
-toprighty = 73.0
-translationx = 44.0
-translationy = -353.0
-zoom = 197.0
+[SectionFilterCPP]
+grass_max = 161
+grass_min = 53
+kernel_dilate_height = 9
+kernel_dilate_width = 9
+kernel_erode_height = 1.0
+kernel_erode_width = 1.0
+light_min = 140
+min_area = 379
+sections = 6
 
-[ColorThreshold]
-c1max = 202.1
-c1min = 28.2
-c2max = 255.0
-c2min = 131.5
-c3max = 255.0
-c3min = 217.9
-shift_hue_plane = False
+[PerspectiveCalibration]
+bottomleftx = 395.0
+bottomlefty = 375.0
+bottomrightx = 860.0
+bottomrighty = 375.0
+topleftx = 19.0
+toplefty = 88.0
+toprightx = 1221.0
+toprighty = 88.0
+translationx = 15.0
+translationy = -149.0
+zoom = 147.0
 
 [RosImagePublisher]
 
