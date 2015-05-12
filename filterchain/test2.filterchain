@@ -20,14 +20,14 @@ translationy = -241.0
 zoom = 152.0
 
 [SectionFilterCPP]
-grass_max = 80.0
-grass_min = 16.0
-kernel_dilate_height = 3.0
-kernel_dilate_width = 3.0
-kernel_erode_height = 3.0
-kernel_erode_width = 3.0
-light_min = 227.0
-min_area = 1027.0
+grass_max = 255.0
+grass_min = 100.0
+kernel_dilate_height = 15.0
+kernel_dilate_width = 15.0
+kernel_erode_height = 1.0
+kernel_erode_width = 1.0
+light_min = 220.0
+min_area = 350.0
 sections = 5.0
 
 [RosImagePublisher]
