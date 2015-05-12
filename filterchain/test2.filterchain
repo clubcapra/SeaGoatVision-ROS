@@ -1,5 +1,11 @@
 [BGR2RGB]
 
+[Rectangle]
+x1 = 492
+x2 = 810
+y1 = 734
+y2 = 665
+
 [PerspectiveCalibration]
 bottomleftx = 452.0
 bottomlefty = 280.0
