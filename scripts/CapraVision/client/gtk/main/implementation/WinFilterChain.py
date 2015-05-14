@@ -317,11 +317,11 @@ class WinFilterChain:
 
     def thread_observer(self, image):
         if not self.controler.is_thread_running() and self.thread_running:
-            self.lblLoopState.set_text('Stopped')
-            self.chkLoop.set_active(False)
+            GObject.idle_add(self.lblLoopState.set_text, 'Stopped')
+            GObject.idle_add(self.chkLoop.set_active, False)
         elif self.controler.is_thread_running() and not self.thread_running:
-            self.lblLoopState.set_text('Running')
-            self.chkLoop.set_active(True)
+            GObject.idle_add(self.lblLoopState.set_text, 'Running')
+            GObject.idle_add(self.chkLoop.set_active, True)
         self.thread_running = self.controler.is_thread_running()
 
     def update_fps(self):
