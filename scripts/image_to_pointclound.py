@@ -11,6 +11,7 @@ import cv2
 import cv2.cv as cv
 from math import *
 
+
 bridge = CvBridge()
 
 # size of the output cloud. For example, total width in meters is (w/k)*100
@@ -24,6 +25,8 @@ x = np.ravel(np.array([[j/resolution for i in xrange(0, w)] for j in xrange(-h/2
 y = np.ravel(np.array([[i/resolution for i in xrange(-w/2, w/2)] for i in xrange(0,h)], dtype=np.float))
 z = np.ravel(np.array([[0 for i in xrange(0, w)] for i in xrange(0,h)], dtype=np.float))
 points_xyz = np.column_stack((x,y,z))
+
+clear_space = rospy.get_param('~clear_space', False)
 
 def handle_image(req):
 
@@ -66,6 +69,16 @@ def handle_image(req):
     header = req.header
     header.frame_id = "img"
 
+    if clear_space:
+        xs = [p for p in points]
+        n = 360
+        t = pi * 2 / n
+
+        for i in range(0, n):
+            xs.append([cos(i * t) * 20, sin(i * t) * 20, 0, 0])
+
+        points = xs
+
     global cloud_out
     cloud_out = pc2.create_cloud(header, fields, points)
 
@@ -74,7 +87,7 @@ class ImageToPointcloud:
 
     def __init__(self):
 
-        rospy.init_node('image_to_pointcloud')
+        rospy.init_node('image_to_pointcloud', log_level=rospy.DEBUG)
 
 
         topic_in = rospy.get_param('~in', "/image_in")
@@ -90,7 +103,7 @@ class ImageToPointcloud:
         real_h = (resolution * h) /100.0
         rospy.loginfo("Publishing cloud, size: " + str(real_w) + " x " + str(real_h))
 
-        rate = rospy.Rate(50)
+        rate = rospy.Rate(10)
         while not rospy.is_shutdown():
 
             tf_found = False
