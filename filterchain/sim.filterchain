@@ -4,14 +4,6 @@ width = 646.0
 
 [BGR2RGB]
 
-[BGR2HSV]
-
-[Rectangle]
-x1 = 520.0
-x2 = 810.0
-y1 = 734.0
-y2 = 590.0
-
 [PerspectiveCalibration]
 bottomleftx = 226.0
 bottomlefty = 140.0
@@ -25,14 +17,16 @@ translationx = 2.0
 translationy = -120.0
 zoom = 152.0
 
-[ColorThreshold]
-c1max = 253.2
-c1min = 0.0
-c2max = 255.0
-c2min = 45.0
-c3max = 255.0
-c3min = 0.0
-shift_hue_plane = False
+[SectionFilterCPP]
+grass_max = 80.0
+grass_min = 16.0
+kernel_dilate_height = 3.0
+kernel_dilate_width = 3.0
+kernel_erode_height = 3.0
+kernel_erode_width = 3.0
+light_min = 227.0
+min_area = 1027.0
+sections = 5.0
 
 [RosImagePublisher]
 

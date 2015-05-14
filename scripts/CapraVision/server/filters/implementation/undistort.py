@@ -29,7 +29,7 @@ class Undistort:
         cameraMatrix = numpy.matrix([[630.79035702238025, 0, 645.50000000000000],
                                      [0, 630.79035702238025, 366.50000000000000],
                                      [0,                  0,                  1]])
-        size = (1292, 734)
+        size = (1292/2, 734/2)
         
         #technique 2
         newimage = numpy.matrix([])

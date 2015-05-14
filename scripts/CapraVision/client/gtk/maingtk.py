@@ -42,7 +42,7 @@ def run():
     GObject.threads_init()
 
     w = CapraVision.client.gtk.main.WinFilterChain(c)
-    w.load_chain("/home/yohan/Ibex/src/seagoatvision_ros/filterchain/test2.filterchain")
+    w.load_chain("/home/yohan/Ibex/src/seagoatvision_ros/filterchain/sim.filterchain")
     w.load_image_source("/home/yohan/Pictures/earth.jpg")
 
     #w.window.show_all()
