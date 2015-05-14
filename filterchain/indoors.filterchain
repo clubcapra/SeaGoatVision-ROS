@@ -1,12 +1,16 @@
+[Resize]
+height = 367.0
+width = 646.0
+
 [BGR2RGB]
 
 [BGR2HSV]
 
 [Rectangle]
-x1 = 520.0
-x2 = 810.0
-y1 = 734.0
-y2 = 538.0
+x1 = 246.0
+x2 = 405.0
+y1 = 367.0
+y2 = 332.0
 
 [Undistort]
 
