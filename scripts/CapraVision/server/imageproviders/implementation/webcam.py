@@ -18,6 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import cv2
+import rospy
 
 global captures 
 captures = {}
@@ -38,6 +39,7 @@ class Webcam:
     def next(self):
         run, image = self.video.read()
         if run == False:
+            rospy.logerr("Run is False, raising StopIteration")
             raise StopIteration
         return image
         

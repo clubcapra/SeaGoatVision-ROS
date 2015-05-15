@@ -1,9 +1,5 @@
 [Noop]
 
-[Resize]
-height = 367.0
-width = 646.0
-
 [BGR2HSV]
 
 [Rectangle]
