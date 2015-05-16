@@ -72,7 +72,7 @@ def handle_image(req):
     if clear_space:
         xs = [p for p in points]
         n = 720
-        t = pi * 2 / n
+        t = pi / n
 
         for i in range(0, n):
             xs.append([cos(i * t) * 20, sin(i * t) * 20, 0, 255])
