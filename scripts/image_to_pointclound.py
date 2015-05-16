@@ -26,7 +26,7 @@ y = np.ravel(np.array([[i/resolution for i in xrange(-w/2, w/2)] for i in xrange
 z = np.ravel(np.array([[0 for i in xrange(0, w)] for i in xrange(0,h)], dtype=np.float))
 points_xyz = np.column_stack((x,y,z))
 
-clear_space = rospy.get_param('~clear_space', False)
+clear_space = rospy.get_param('~clear_space', True)
 
 def handle_image(req):
 
@@ -71,11 +71,11 @@ def handle_image(req):
 
     if clear_space:
         xs = [p for p in points]
-        n = 360
+        n = 720
         t = pi * 2 / n
 
         for i in range(0, n):
-            xs.append([cos(i * t) * 20, sin(i * t) * 20, 0, 0])
+            xs.append([cos(i * t) * 20, sin(i * t) * 20, 0, 255])
 
         points = xs
 
