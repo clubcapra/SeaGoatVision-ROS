@@ -23,7 +23,6 @@
     </node>-->
     <node pkg="seagoatvision_ros" type="image_to_pointclound.py" name="image_to_pointclound" >
            <param name="in" value="/seagoat_node/image_filtered" />
-           <param name="out" value="/cloud_in" />
-	   <param name="clear_space" value="true"/>
+            <param name="out" value="/cloud_vision" />
     </node>
 </launch>
