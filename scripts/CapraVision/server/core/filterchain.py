@@ -59,7 +59,8 @@ def read(file_name):
     new_chain = FilterChain()
     cfg = ConfigParser.ConfigParser()
     cfg.read(file_name)
-    for section in cfg.sections():
+    for section_raw in cfg.sections():
+        section = section_raw[0:section_raw.index('-')]
         filtre = CapraVision.server.filters.create_filter(section) 
         for member in filtre.__dict__:
             parameter = getattr(filtre,member)
@@ -82,8 +83,8 @@ def read(file_name):
 def write(file_name, chain):
     """Save the content of the filter chain in a file."""
     cfg = ConfigParser.ConfigParser()
-    for fname, params in params_list(chain):
-        cfg.add_section(fname)
+    for i, (fname, params) in enumerate(params_list(chain)):
+        cfg.add_section('%s-%d' % (fname, i))
         for name, value in params:
             if isinstance(value, str):
                 value = '\n'.join(['"%s"' % line for line in str.splitlines(value)])

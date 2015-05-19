@@ -21,7 +21,8 @@ def replace_filter(src_chain, dst_chain, filter):
         return
 
     out_cfg = ConfigParser.ConfigParser()
-    for section in dst_cfg.sections():
+    for section_raw in dst_cfg.sections():
+        section = section_raw[0:section_raw.index('-')]
         if section == filter:
             out_cfg.add_section(section)
             for option in src_cfg.options(section):
