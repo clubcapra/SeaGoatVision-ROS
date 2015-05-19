@@ -4,31 +4,29 @@ import ConfigParser
 import rospy
 
 def replace_filter(src_chain, dst_chain, filter):
-
-    src_cfg = ConfigParser.ConfigParser()
-    dst_cfg = ConfigParser.ConfigParser()
-
-    src_cfg.read(src_chain)
-    dst_cfg.read(dst_chain)
+    
+    src = yaml.load(open(src_chain, 'r'))
+    dst = yaml.load(open(dst_chain, 'r'))
 
     rospy.loginfo("Copying {} from {} to {}".format(filter, src_chain, dst_chain))
-
-    if not src_cfg.has_section(filter):
+    
+    if not any(obj['_type'] == filter for obj in src):
         rospy.logwarn("Unable to find filter {} in source filterchain {}".format(filter, src_chain))
         return
-    if not dst_cfg.has_section(filter):
+    if not any(obj['_type'] == filter for obj in dst):
         rospy.logwarn("Unable to find filter {} in dest filterchain {}".format(filter, dst_chain))
         return
 
-    out_cfg = ConfigParser.ConfigParser()
-    for section in dst_cfg.sections():
-        if section == filter:
-            out_cfg.add_section(section)
-            for option in src_cfg.options(section):
-                out_cfg.set(section, option, src_cfg.get(section, option))
-        else:
-            out_cfg.add_section(section)
-            for option in dst_cfg.options(section):
-                out_cfg.set(section, option, dst_cfg.get(section, option))
+    out = []
 
-    out_cfg.write(open(dst_chain, 'w'))
+    for obj in dst:
+        if obj['_type'] == filter:
+            for obj_src in src:
+                if obj_src['_type'] == filter:
+                    out.append(obj_src)
+                    break
+        else:
+            out.append(obj)
+
+    with open(dst_chain, 'w') as f:
+        yaml.dump(out, f, default_flow_style=True)

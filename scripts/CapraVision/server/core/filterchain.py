@@ -26,6 +26,7 @@ from CapraVision.server.filters.parameter import Parameter
 
 import ConfigParser
 import types
+import yaml
 
 def my_import(name):
     mod = __import__(name)
@@ -57,23 +58,15 @@ def isnumeric(string):
 def read(file_name):
     """Open a filtre chain file and load its content in a new filtre chain."""
     new_chain = FilterChain()
-    cfg = ConfigParser.ConfigParser()
-    cfg.read(file_name)
-    for section in cfg.sections():
-        filtre = CapraVision.server.filters.create_filter(section) 
+    filters = yaml.load(open(file_name, 'r'))
+
+    for obj in filters:
+        filtre = CapraVision.server.filters.create_filter(obj['_type'])
         for member in filtre.__dict__:
-            parameter = getattr(filtre,member)
-            if not isinstance(parameter, Parameter):
-                continue
-            val = cfg.get(section, member)
-            if val == "True" or val == "False":
-                parameter.set_current_value(cfg.getboolean(section, member))
-            elif isnumeric(val):
-                parameter.set_current_value(cfg.getfloat(section, member))
-            else:
-                if isinstance(val, str):
-                    val = '\n'.join([line[1:-1] for line in str.splitlines(val)])
-                parameter.set_current_value(val)
+            parameter = getattr(filtre, member)
+            if isinstance(parameter, Parameter):
+                parameter.set_current_value(obj[member])
+
         if hasattr(filtre, 'configure'):
             filtre.configure()
         new_chain.add_filter(filtre)
@@ -81,14 +74,16 @@ def read(file_name):
 
 def write(file_name, chain):
     """Save the content of the filter chain in a file."""
-    cfg = ConfigParser.ConfigParser()
+    filters = []
+
     for fname, params in params_list(chain):
-        cfg.add_section(fname)
-        for name, value in params:
-            if isinstance(value, str):
-                value = '\n'.join(['"%s"' % line for line in str.splitlines(value)])
-            cfg.set(fname, name, value)
-    cfg.write(open(file_name, 'w'))
+        obj = { name: value for name, value in params}
+        obj["_type"] = fname
+
+        filters.append(obj)
+
+    with open(file_name, 'w') as out:
+        yaml.dump(filters, out, default_flow_style=False)
     
 class FilterChain:
     """ Observable.  Contains the chain of filters to execute on an image.
