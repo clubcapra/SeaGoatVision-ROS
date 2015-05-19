@@ -60,17 +60,19 @@ def read(file_name):
     cfg = ConfigParser.ConfigParser()
     cfg.read(file_name)
     for section_raw in cfg.sections():
-        section = section_raw[0:section_raw.index('-')]
+        section = section_raw
+        if '-' in section:
+            section = section_raw[0:section_raw.index('-')]
         filtre = CapraVision.server.filters.create_filter(section) 
         for member in filtre.__dict__:
             parameter = getattr(filtre,member)
             if not isinstance(parameter, Parameter):
                 continue
-            val = cfg.get(section, member)
+            val = cfg.get(section_raw, member)
             if val == "True" or val == "False":
-                parameter.set_current_value(cfg.getboolean(section, member))
+                parameter.set_current_value(cfg.getboolean(section_raw, member))
             elif isnumeric(val):
-                parameter.set_current_value(cfg.getfloat(section, member))
+                parameter.set_current_value(cfg.getfloat(section_raw, member))
             else:
                 if isinstance(val, str):
                     val = '\n'.join([line[1:-1] for line in str.splitlines(val)])
@@ -84,11 +86,12 @@ def write(file_name, chain):
     """Save the content of the filter chain in a file."""
     cfg = ConfigParser.ConfigParser()
     for i, (fname, params) in enumerate(params_list(chain)):
-        cfg.add_section('%s-%d' % (fname, i))
+        section_name = '%s-%d' % (fname, i)
+        cfg.add_section(section_name)
         for name, value in params:
             if isinstance(value, str):
                 value = '\n'.join(['"%s"' % line for line in str.splitlines(value)])
-            cfg.set(fname, name, value)
+            cfg.set(section_name, name, value)
     cfg.write(open(file_name, 'w'))
     
 class FilterChain:
