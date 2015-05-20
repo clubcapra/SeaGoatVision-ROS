@@ -19,9 +19,13 @@ resolution = 40.0 # number of points per meter (float)
 w = 200 # total points for width
 h = 200 # total points for height
 
+# offset of the pointcloud in meters on the x axis. This number was originally chosen to keep existing
+# calibrations valid. If you change it, you have to re-calibrate
+offset_x = 1.255
+
 topic_in = rospy.get_param('~in', "/image_in")
 
-x = np.ravel(np.array([[j/resolution for i in xrange(0, w)] for j in xrange(-h/2,h/2)], dtype=np.float))
+x = np.ravel(np.array([[j/resolution + offset_x for i in xrange(0, w)] for j in xrange(-h/2,h/2)], dtype=np.float))
 y = np.ravel(np.array([[i/resolution for i in xrange(-w/2, w/2)] for i in xrange(0,h)], dtype=np.float))
 z = np.ravel(np.array([[0 for i in xrange(0, w)] for i in xrange(0,h)], dtype=np.float))
 points_xyz = np.column_stack((x,y,z))
@@ -67,7 +71,7 @@ def handle_image(req):
     points = points[np.logical_not(points[:,3] == 0)]
 
     header = req.header
-    header.frame_id = "img"
+    header.frame_id = "base_footprint"
 
     if clear_space:
         xs = [p for p in points]
@@ -117,8 +121,11 @@ class ImageToPointcloud:
                 #print imgRotE
 
                 br = tf.TransformBroadcaster()
+
                 # dist en X = (hauteur camera) / cos(angle entre camera et axe vertical)
-                br.sendTransform((-camTrans[2] / cos(imgRotE[1]- pi/2),0.0,0.0),imgRotQ,rospy.Time.now(), "img", "camera")
+                imgPos = ((-camTrans[2] / cos(imgRotE[1]- pi/2), 0.0, 0.0))
+
+                br.sendTransform(imgPos, imgRotQ, rospy.Time.now(), "img", "camera")
                 if "cloud_out" in globals():
                     global cloud_out
                     pub.publish(cloud_out)
