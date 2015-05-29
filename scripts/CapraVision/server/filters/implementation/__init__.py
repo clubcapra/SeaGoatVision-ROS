@@ -119,7 +119,7 @@ def compile_cpp_filters():
                 py::object o = params.get(name);
                 return PyInt_AsLong(o.mcall("get_current_value"));
             }
-            
+
             bool ParameterAsBool(char* name, int min, int max, int def_val) {
                 if(!params.has_key(name)) {
                     init_param(name, min, max, def_val);
@@ -207,6 +207,7 @@ def compile_cpp_filters():
                                  if line.startswith('#include')]
         mod.customize.add_header("<Python.h>")
         mod.customize.add_extra_link_arg("`pkg-config --cflags --libs opencv python`")
+        mod.customize.add_extra_link_arg("-L/usr/local/cuda/lib64")
     
         func = ext_tools.ext_function('exec_' + filename, ext_code(),['image'])
         func.customize.add_support_code(params_code())
