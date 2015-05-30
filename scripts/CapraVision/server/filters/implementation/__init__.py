@@ -104,7 +104,7 @@ def compile_cpp_filters():
         return """
             py::dict params;
             py::object py_init_param;
-            void init_param(char* name, int min, int max, int def_val) {
+            void init_param(const char* name, int min, int max, int def_val) {
                     py::tuple args(4);
                     args[0] = name;
                     args[1] = min;
@@ -112,7 +112,7 @@ def compile_cpp_filters():
                     args[3] = def_val;
                     py_init_param.call(args);            
             } 
-            long ParameterAsInt(char* name, int min, int max, int def_val) {
+            long ParameterAsInt(const char* name, int min, int max, int def_val) {
                 if(!params.has_key(name)) {
                     init_param(name, min, max, def_val);
                 }
@@ -120,7 +120,7 @@ def compile_cpp_filters():
                 return PyInt_AsLong(o.mcall("get_current_value"));
             }
 
-            bool ParameterAsBool(char* name, int min, int max, int def_val) {
+            bool ParameterAsBool(const char* name, int min, int max, int def_val) {
                 if(!params.has_key(name)) {
                     init_param(name, min, max, def_val);
                 }
