@@ -12,14 +12,19 @@ y2 = 309.0
 
 [SectionFilterCPP]
 grass_max = 163
-grass_min = 98
-kernel_dilate_height = 1
-kernel_dilate_width = 1
+grass_min = 108
+kernel_dilate_height = 1.0
+kernel_dilate_width = 1.0
 kernel_erode_height = 1.0
 kernel_erode_width = 1.0
 light_min = 140
-min_area = 355
-sections = 5
+min_area = 320
+sections = 8
+
+[ParticleFilter]
+area_min = 52.0
+kernel_height = 3.0
+kernel_width = 3.0
 
 [PerspectiveCalibration]
 bottomleftx = 212.0
