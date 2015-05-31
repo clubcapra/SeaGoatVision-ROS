@@ -78,8 +78,8 @@ def handle_image(req):
         n = 720
         t = pi / n
 
-        for i in range(0, n):
-            xs.append([sin(i * t) * 20, cos(i * t) * 20, 0, 255])
+        for i in range(200, n - 200):
+            xs.append([sin(i * t) * 10, cos(i * t) * 10, 0, 255])
 
         points = xs
 
