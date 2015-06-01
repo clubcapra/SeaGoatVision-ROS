@@ -9,15 +9,15 @@ y2 = 309.0
 [Undistort]
 
 [SectionFilterCPP]
-grass_max = 163.0
-grass_min = 108.0
+grass_max = 163
+grass_min = 108
 kernel_dilate_height = 1.0
 kernel_dilate_width = 1.0
 kernel_erode_height = 1.0
 kernel_erode_width = 1.0
-light_min = 140.0
-min_area = 320.0
-sections = 8.0
+light_min = 140
+min_area = 320
+sections = 7
 
 [ParticleFilter]
 area_min = 52.0
